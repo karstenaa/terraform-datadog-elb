@@ -181,7 +181,7 @@ resource "datadog_timeboard" "elb_application" {
 }
 
 module "elb_application_monitor_healthy_host_count" {
-  source  = "github.com/traveloka/terraform-datadog-monitor"
+  source  = "github.com/traveloka/terraform-datadog-monitor?ref=v0.1.8"
   enabled = "${local.elb_application_monitor_enabled}"
 
   product_domain = "${var.product_domain}"
