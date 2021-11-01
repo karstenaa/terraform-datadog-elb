@@ -1,20 +1,18 @@
 terraform-datadog-elb
 =================
-
-Terraform module for Datadog ELB.
-
-
+Terraform module for creating Datadog ELB dashboard and monitor.
 
 Usage
 -----
+
 * [Simple Example](https://github.com/traveloka/terraform-datadog-elb/tree/master/examples/simple)
 * [Complete Example](https://github.com/traveloka/terraform-datadog-elb/tree/master/examples/complete)
 
 Terraform Version
 -----------------
 
-This module was created using Terraform 0.11.7. 
-So to be more safe, Terraform version 0.11.7 or newer is required to use this module.
+This module was created using Terraform 0.12.31. 
+So to be more safe, Terraform version 0.12.31 or newer is required to use this module.
 
 Authors
 -------
