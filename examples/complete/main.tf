@@ -12,6 +12,7 @@ module "elb" {
   warning_recipients = ["slack-bei"]
   renotify_interval  = 0
   notify_audit       = false
+  notify_no_data     = true
 
   healthy_host_name = "Healthy Host Name"
   healthy_host_count_thresholds = {

@@ -6,5 +6,7 @@ module "elb" {
   lb_type        = "application"
   environment    = "production"
 
+  notify_no_data = true
+
   recipients = ["slack-bei", "pagerduty-bei", "bei@traveloka.com"]
 }

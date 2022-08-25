@@ -240,7 +240,7 @@ resource "datadog_dashboard" "elb_classic" {
 }
 
 module "elb_classic_monitor_healthy_host_count" {
-  source  = "github.com/traveloka/terraform-datadog-monitor?ref=v0.3.0"
+  source  = "github.com/traveloka/terraform-datadog-monitor?ref=v0.3.1"
   enabled = local.elb_classic_monitor_enabled
 
   product_domain = var.product_domain
@@ -264,4 +264,5 @@ module "elb_classic_monitor_healthy_host_count" {
   renotify_interval = var.renotify_interval
   notify_audit      = var.notify_audit
   include_tags      = var.healthy_host_include_tags
+  notify_no_data    = var.notify_no_data
 }

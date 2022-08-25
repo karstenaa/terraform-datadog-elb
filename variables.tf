@@ -99,3 +99,9 @@ variable "healthy_host_include_tags" {
   default     = true
   description = "The flag to include tags in name for ELB Healthy Host Count Monitor"
 }
+
+variable "notify_no_data" {
+  type        = bool
+  default     = false
+  description = "Notify if there is no data receive"
+}
