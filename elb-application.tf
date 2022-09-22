@@ -278,7 +278,7 @@ module "elb_application_monitor_healthy_host_count" {
 
   name = var.healthy_host_name != "" ? var.healthy_host_name : "${var.product_domain} - ${var.lb_name} - ${var.environment} - Number of Healthy Hosts is Low"
 
-  query              = "sum(last_1m):sum:aws.applicationelb.healthy_host_count{name:${var.lb_name}, environment:${var.environment}} by {name} <= ${var.healthy_host_count_thresholds["critical"]}"
+  query              = "sum(last_1m):sum:aws.applicationelb.healthy_host_count{name:${var.lb_name}, environment:${var.environment}} <= ${var.healthy_host_count_thresholds["critical"]}"
   thresholds         = var.healthy_host_count_thresholds
   evaluation_delay   = "900"
   message            = var.healthy_host_count_message
