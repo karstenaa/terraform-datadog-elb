@@ -240,7 +240,7 @@ resource "datadog_dashboard" "elb_classic" {
 }
 
 module "elb_classic_monitor_healthy_host_count" {
-  source  = "github.com/traveloka/terraform-datadog-monitor?ref=v0.3.1"
+  source  = "git@github.com:traveloka/terraform-datadog-monitor?ref=v0.3.4"
   enabled = local.elb_classic_monitor_enabled
 
   product_domain = var.product_domain
