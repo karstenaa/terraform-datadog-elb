@@ -33,7 +33,7 @@ resource "datadog_dashboard" "elb_application" {
 
   widget {
     timeseries_definition {
-      title = "HTTP Responses Count"
+      title = "HTTP Error Responses Count"
 
       request {
         q            = "sum:aws.applicationelb.httpcode_elb_4xx{$lb_name, $environment} by {name,availability-zone}.as_count()"
@@ -75,10 +75,84 @@ resource "datadog_dashboard" "elb_application" {
 
   widget {
     timeseries_definition {
+      title = "HTTP Target Responses Count Per Availability Zone"
+
+      request {
+        q            = "sum:aws.applicationelb.httpcode_target_2xx{$lb_name, $environment} by {availability-zone}.as_count()"
+        display_type = "line"
+      }
+
+      request {
+        q            = "sum:aws.applicationelb.httpcode_target_3xx{$lb_name, $environment} by {availability-zone}.as_count()"
+        display_type = "line"
+      }
+
+      request {
+        q            = "sum:aws.applicationelb.httpcode_target_4xx{$lb_name, $environment} by {availability-zone}.as_count()"
+        display_type = "line"
+      }
+
+      request {
+        q            = "sum:aws.applicationelb.httpcode_target_3xx{$lb_name, $environment} by {availability-zone}.as_count()"
+        display_type = "line"
+      }
+    }
+  }
+
+  widget {
+    timeseries_definition {
+      title = "HTTP Target Responses Count Total"
+
+      request {
+        q            = "sum:aws.applicationelb.httpcode_target_2xx{$lb_name, $environment}.as_count()"
+        display_type = "line"
+      }
+
+      request {
+        q            = "sum:aws.applicationelb.httpcode_target_3xx{$lb_name, $environment}.as_count()"
+        display_type = "line"
+      }
+
+      request {
+        q            = "sum:aws.applicationelb.httpcode_target_4xx{$lb_name, $environment}.as_count()"
+        display_type = "line"
+      }
+
+      request {
+        q            = "sum:aws.applicationelb.httpcode_target_3xx{$lb_name, $environment}.as_count()"
+        display_type = "line"
+      }
+    }
+  }
+
+  widget {
+    timeseries_definition {
       title = "Request Count"
 
       request {
         q            = "sum:aws.applicationelb.request_count{$lb_name, $environment} by {name,availability-zone}.as_count()"
+        display_type = "line"
+      }
+    }
+  }
+
+  widget {
+    timeseries_definition {
+      title = "Request Count Per Availability Zone"
+
+      request {
+        q            = "sum:aws.applicationelb.request_count{$lb_name, $environment} by {availability-zone}.as_count()"
+        display_type = "line"
+      }
+    }
+  }
+
+  widget {
+    timeseries_definition {
+      title = "Request Count Total"
+
+      request {
+        q            = "sum:aws.applicationelb.request_count{$lb_name, $environment}.as_count()"
         display_type = "line"
       }
     }
@@ -105,6 +179,17 @@ resource "datadog_dashboard" "elb_application" {
 
       request {
         q            = "sum:aws.applicationelb.healthy_host_count_deduped{$lb_name, $environment} by {name,availability-zone}"
+        display_type = "line"
+      }
+    }
+  }
+
+  widget {
+    timeseries_definition {
+      title = "Healthy Host Count Total"
+
+      request {
+        q            = "sum:aws.applicationelb.healthy_host_count{$lb_name, $environment}"
         display_type = "line"
       }
     }
@@ -193,7 +278,7 @@ module "elb_application_monitor_healthy_host_count" {
 
   name = var.healthy_host_name != "" ? var.healthy_host_name : "${var.product_domain} - ${var.lb_name} - ${var.environment} - Number of Healthy Hosts is Low"
 
-  query              = "sum(last_1m):sum:aws.applicationelb.healthy_host_count{name:${var.lb_name}, environment:${var.environment}} by {name} <= ${var.healthy_host_count_thresholds["critical"]}"
+  query              = "sum(last_1m):sum:aws.applicationelb.healthy_host_count{name:${var.lb_name}, environment:${var.environment}} <= ${var.healthy_host_count_thresholds["critical"]}"
   thresholds         = var.healthy_host_count_thresholds
   evaluation_delay   = "900"
   message            = var.healthy_host_count_message
